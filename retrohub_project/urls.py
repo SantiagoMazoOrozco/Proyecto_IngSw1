@@ -40,6 +40,9 @@ def about(request):
 def login(request):
     return render(request, 'login.html')
 
+def play_chrono_trigger(request):
+    return render(request, 'play.html')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),  # Esta línea hace que se cargue en la raíz /
@@ -49,4 +52,5 @@ urlpatterns = [
     path('streams/', streams, name='streams'),
     path('about/', about, name='about'),
     path('login/', login, name='login'),
+    path('play/chrono-trigger/', play_chrono_trigger, name='play_chrono_trigger'),
 ]

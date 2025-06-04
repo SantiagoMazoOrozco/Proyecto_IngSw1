@@ -107,10 +107,13 @@
                                   <em style="color: #ec6090; font-style: normal;">Busca</em> Juegos de antaño aquí
                               </h2>
                               <p class="lead mb-4" style="font-size: 1.2rem; color: aliceblue;">Revive los clásicos que marcaron tu infancia</p>
-                              <div class="main-button">
-                                  <a href="{% url 'browse' %}" class="btn btn-primary btn-lg px-4 py-2" style="background-color: #ec6090; border: none; border-radius: 30px; font-weight: 600;">
-                                      Buscar Juegos
-                                  </a>
+                              <div class="main-button" style="display: flex; gap: 10px;">
+                                <a href="{% url 'browse' %}" class="btn btn-primary btn-lg px-4 py-2" style="background-color: #ec6090; border: none; border-radius: 30px; font-weight: 600;">
+                                    Buscar Juegos
+                                </a>
+                                <a href="{% url 'play_chrono_trigger' %}" class="btn btn-success btn-lg px-4 py-2" style="background-color: #28a745; border: none; border-radius: 30px; font-weight: 600;">
+                                    Jugar Chrono Trigger
+                                </a>
                               </div>
                           </div>
                       </div>

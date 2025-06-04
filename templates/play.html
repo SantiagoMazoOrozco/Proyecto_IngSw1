@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jugar Chrono Trigger (SNES)</title>
+  <style>
+    #emulator-frame {
+      width: 1200px;
+      height: 900px;
+      max-width: 98vw;
+      max-height: 90vh;
+      border: 2px solid #ec6090;
+      background: #000;
+      display: block;
+      margin: 0 auto;
+    }
+    body { background: #181a1b; color: #fff; font-family: 'Poppins', sans-serif; }
+    .center { display: flex; flex-direction: column; align-items: center; margin-top: 40px; }
+  </style>
+</head>
+<body>
+  <div class="center">
+    <h2>Jugando: Chrono Trigger (Super Nintendo)</h2>
+    <div id="emulator-container"></div>
+    <p>Controles: Usa tu teclado como mando SNES.</p>
+  </div>
+  <script>
+    // Usar iframe para cargar el emulador Webretro con la ROM correcta
+    const container = document.getElementById('emulator-container');
+    const iframe = document.createElement('iframe');
+    iframe.id = 'emulator-frame';
+    iframe.src = "{% static 'vendor/webretro-master/webretro.html' %}?core=snes9x&rom=Chrono_Trigger.smc";
+    iframe.width = "1200";
+    iframe.height = "900";
+    iframe.allowFullscreen = true;
+    container.appendChild(iframe);
+  </script>
+</body>
+</html>

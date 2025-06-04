@@ -1,0 +1,50 @@
+Proyecto_IngSw1/
+│
+├── manage.py
+├── project_structure.txt
+├── <Retrohub>/
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+│   # ...otros archivos del proyecto...
+├── templates/
+│   ├── about.html
+│   ├── browse.html
+│   ├── details.html
+│   ├── index.html
+│   ├── profile.html
+│   ├── streams.html
+│   └── play.html
+├── static/
+│   ├── vendor/
+│   │   ├── bootstrap/
+│   │   │   ├── css/
+│   │   │   │   └── bootstrap.min.css
+│   │   │   └── js/
+│   │   │       └── bootstrap.min.js
+│   │   ├── jquery/
+│   │   │   └── jquery.min.js
+│   │   └── webretro-master/
+│   │       ├── webretro.html
+│   │       ├── webretro.js
+│   │       ├── webretro.wasm
+│   │       ├── assets/
+│   │       ├── uauth/
+│   │       ├── manifest.json
+│   │       ├── pwa.js
+│   │       └── roms/
+│   │           └── Chrono_Trigger.smc
+│   # ...otros archivos y carpetas...
+│   ├── assets/
+│   │   ├── css/
+│   │   ├── js/
+│   │   └── images/
+├── db.sqlite3
+├── venv/
+│   ├── Scripts/
+│   ├── Lib/
+│   ├── Include/
+│   └── ...otros archivos del entorno virtual...
+└── ...
