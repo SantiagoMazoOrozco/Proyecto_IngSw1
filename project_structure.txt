@@ -20,12 +20,7 @@ Proyecto_IngSw1/
 ├── static/
 │   ├── vendor/
 │   │   ├── bootstrap/
-│   │   │   ├── css/
-│   │   │   │   └── bootstrap.min.css
-│   │   │   └── js/
-│   │   │       └── bootstrap.min.js
 │   │   ├── jquery/
-│   │   │   └── jquery.min.js
 │   │   └── webretro-master/
 │   │       ├── webretro.html
 │   │       ├── webretro.js
