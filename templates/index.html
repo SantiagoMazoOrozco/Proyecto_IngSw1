@@ -19,6 +19,7 @@
 
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'assets/css/templatemo-cyborg-gaming.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
@@ -26,9 +27,83 @@
     <!-- TemplateMo 579 Cyborg Gaming -->
     <!-- https://templatemo.com/tm-579-cyborg-gaming -->
     <style>
-      .header-area {
-        background-color: #1f2122 !important;
-        color: #d3d3d3 !important;
+      /* Asegurar que el ícono sea visible inicialmente */
+      .theme-switcher {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        backdrop-filter: blur(4px);
+        background-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 
+          0 1px 3px rgba(0, 0, 0, 0.12),
+          0 1px 2px rgba(0, 0, 0, 0.24);
+      }
+
+      /* Efecto hover sutil */
+      .theme-switcher:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 
+          0 3px 6px rgba(0, 0, 0, 0.16),
+          0 3px 6px rgba(0, 0, 0, 0.23);
+      }
+
+      /* Efecto al hacer clic */
+      .theme-switcher:active {
+        transform: translateY(-50%) scale(0.95);
+      }
+
+      /* Ícono */
+      #theme-icon {
+        font-size: 18px;
+        color: var(--icon-color, #ffffff);
+        transition: 
+          color 0.3s ease,
+          transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      }
+
+      /* Efecto hover para el ícono */
+      .theme-switcher:hover #theme-icon {
+        transform: rotate(15deg);
+      }
+
+      /* Estilos para modo oscuro */
+      [data-theme="light"] .theme-switcher {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      [data-theme="light"] #theme-icon {
+        color: var(--icon-color, #000000);
+      }
+
+      :root {
+        --static-text-color: #ec6090; /* Color que NO cambiará (para h6) */
+        --dynamic-text-color: #fff; /* Color que SÍ cambiará (para h4) */
+      }
+
+      [data-theme="light"] {
+        --dynamic-text-color: #333; /* Color para h4 en modo claro */
+      }
+
+      h6 {
+        color: var(--static-text-color) !important; /* Color fijo */
+        font-size: 30px;
+        margin-bottom: 15px;
+      }
+
+      h4 {
+        color: var(--dynamic-text-color); /* Color dinámico */
       }
     </style>
   </head>
@@ -56,13 +131,18 @@
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
                     <a href="{% url 'home' %}" class="logo d-flex align-items-end justify-content-center"
-                      style="gap: 6px; transform: scale(0.95); transform-origin: right; margin-top: -20px;">
+                      style="gap: 8px; transform: scale(0.95); transform-origin: right; margin-top: -23px;">
                       <img src="{% static 'assets/images/Logo_Symbol.png' %}" alt="RetroHub Logo"
                           style="height: 90px; width: auto; border-radius: 8px;">
                       <img src="{% static 'assets/images/Logo_Text.png' %}" alt="RetroHub Logo Text"
                           style="height: 90px; width: auto; border-radius: 8px;">
                     </a>
                     <!-- ***** Logo End ***** -->
+                     <div class="theme-switcher-container" style="display: flex; align-items: left; justify-content: center;">
+                      <button id="theme-toggle" class="theme-switcher" aria-label="Cambiar tema">
+                        <i id="theme-icon" class="fas"></i>
+                      </button>
+                     </div>
                     <!-- ***** Search End ***** -->
                     <div class="search-input">
                       <form id="search" action="#">
@@ -80,9 +160,6 @@
                         <li><a href="{% url 'about' %}">Sobre Nosotros</a></li>
                         <li><a href="{% url 'login' %}">Perfil <img src="{% static 'assets/images/profile-header.jpg' %}" alt=""></a></li>
                     </ul>  
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
                     <!-- ***** Menu End ***** -->
                 </nav>
             </div>
@@ -270,7 +347,7 @@
             </div>
           {% else %}
             <div class="text-center py-5">
-              <h4 style="color: white;">Debes iniciar sesión para ver tu biblioteca de juegos.</h4>
+              <h4>Debes iniciar sesión para ver tu biblioteca de juegos.</h4>
 
               <!-- Botón centrado -->
               <div class="main-button mt-4">
@@ -307,6 +384,43 @@
   <script src="{% static 'assets/js/tabs.js' %}"></script>
   <script src="{% static 'assets/js/popup.js' %}"></script>
   <script src="{% static 'assets/js/custom.js' %}"></script>
+
+  <script>
+    // Función para actualizar el ícono según el tema
+    function updateThemeIcon(theme) {
+      const themeIcon = document.getElementById('theme-icon');
+      themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+
+    // Función para cambiar el tema
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? null : 'light';
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    }
+
+    // Inicialización al cargar la página
+    function initializeTheme() {
+      // Cargar tema guardado o detectar preferencia del sistema
+      const savedTheme = localStorage.getItem('theme');
+      const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      
+      const initialTheme = savedTheme || (systemPrefersLight ? 'light' : '');
+      if (initialTheme) {
+        document.documentElement.setAttribute('data-theme', initialTheme);
+      }
+      
+      // Actualizar ícono inicial
+      updateThemeIcon(initialTheme || '');
+    }
+
+    // Eventos
+    document.addEventListener('DOMContentLoaded', initializeTheme);
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+  </script>
 
 
   </body>
