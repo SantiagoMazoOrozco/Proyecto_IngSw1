@@ -105,6 +105,145 @@
       h4 {
         color: var(--dynamic-text-color); /* Color dinámico */
       }
+
+      .menu-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      /* Estilos del botón del menú */
+      .menu-trigger {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .menu-trigger:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .menu-text {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 14px;
+      }
+
+      .menu-icon i {
+        font-size: 18px;
+        color: var(--text-primary);
+        transition: transform 0.3s ease;
+      }
+
+      .menu-trigger:hover .menu-icon i {
+        transform: rotate(90deg);
+      }
+
+      /* Estilos del menú de navegación */
+      .nav-menu {
+        display: flex;
+        transition: all 0.3s ease;
+      }
+
+      .nav-list {
+        display: flex;
+        gap: 15px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .nav-item {
+        position: relative;
+      }
+
+      .nav-link {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .nav-link:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--accent-color);
+      }
+
+      .nav-link.active {
+        color: var(--accent-color);
+        font-weight: 600;
+      }
+
+      /* Estilos específicos para el perfil */
+      .profile-item {
+        margin-left: 10px;
+      }
+
+      .profile-link {
+        gap: 10px;
+      }
+
+      .profile-image {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--accent-color);
+        transition: transform 0.3s ease;
+      }
+
+      .profile-link:hover .profile-image {
+        transform: scale(1.1);
+      }
+
+      /* Versión móvil (menú hamburguesa) */
+      @media (max-width: 992px) {
+        .menu-container {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        
+        .nav-menu {
+          width: 100%;
+          max-height: 0;
+          overflow: hidden;
+          flex-direction: column;
+        }
+        
+        .nav-menu.active {
+          max-height: 500px;
+          padding: 15px 0;
+        }
+        
+        .nav-list {
+          flex-direction: column;
+          gap: 5px;
+        }
+        
+        .nav-link {
+          padding: 12px 20px;
+        }
+        
+        .profile-item {
+          margin-left: 0;
+          margin-top: 10px;
+          border-top: 1px solid var(--border-color);
+          padding-top: 10px;
+        }
+      }
     </style>
   </head>
 
@@ -131,11 +270,11 @@
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
                     <a href="{% url 'home' %}" class="logo d-flex align-items-end justify-content-center"
-                      style="gap: 8px; transform: scale(0.95); transform-origin: right; margin-top: -23px;">
+                      style="gap: 8px; transform: scale(0.95); transform-origin: right; margin-top: -23px; border: none; box-shadow: none; outline: none;">
                       <img src="{% static 'assets/images/Logo_Symbol.png' %}" alt="RetroHub Logo"
-                          style="height: 90px; width: auto; border-radius: 8px;">
+                          style="height: 90px; width: auto; border-radius: 8px; border: none;">
                       <img src="{% static 'assets/images/Logo_Text.png' %}" alt="RetroHub Logo Text"
-                          style="height: 90px; width: auto; border-radius: 8px;">
+                          style="height: 90px; width: auto; border-radius: 8px; border: none;">
                     </a>
                     <!-- ***** Logo End ***** -->
                      <div class="theme-switcher-container" style="display: flex; align-items: left; justify-content: center;">
@@ -152,14 +291,23 @@
                     </div>
                     <!-- ***** Search End ***** -->
                     <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                        <li><a href="{% url 'home' %}" class="active">Hogar</a></li>
-                        <li><a href="{% url 'browse' %}">Buscar</a></li>
-                        <li><a href="{% url 'details' %}">Detalles</a></li>
-                        <li><a href="{% url 'streams' %}">Transmisiones</a></li>
-                        <li><a href="{% url 'about' %}">Sobre Nosotros</a></li>
-                        <li><a href="{% url 'login' %}">Perfil <img src="{% static 'assets/images/profile-header.jpg' %}" alt=""></a></li>
-                    </ul>  
+                    <div class="menu-container">
+                      <nav class="nav-menu">
+                        <ul class="nav-list">
+                          <li class="nav-item"><a href="{% url 'home' %}" class="nav-link active">Hogar</a></li>
+                          <li class="nav-item"><a href="{% url 'browse' %}" class="nav-link">Buscar</a></li>
+                          <li class="nav-item"><a href="{% url 'details' %}" class="nav-link">Detalles</a></li>
+                          <li class="nav-item"><a href="{% url 'streams' %}" class="nav-link">Transmisiones</a></li>
+                          <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">Sobre Nosotros</a></li>
+                          <li class="nav-item profile-item">
+                            <a href="{% url 'login' %}" class="nav-link profile-link">
+                              Perfil
+                              <img src="{% static 'assets/images/profile-header.jpg' %}" alt="Foto de perfil" class="profile-image">
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
                     <!-- ***** Menu End ***** -->
                 </nav>
             </div>
@@ -420,9 +568,35 @@
     // Eventos
     document.addEventListener('DOMContentLoaded', initializeTheme);
     document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuTrigger = document.querySelector('.menu-trigger');
+      const navMenu = document.querySelector('.nav-menu');
+      
+      menuTrigger.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+        
+        // Animación del icono
+        const menuIcon = this.querySelector('.menu-icon i');
+        if (navMenu.classList.contains('active')) {
+          menuIcon.classList.replace('fa-bars', 'fa-times');
+        } else {
+          menuIcon.classList.replace('fa-times', 'fa-bars');
+        }
+      });
+    });
+
+    // Manejo del evento de búsqueda
+    function handle(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault(); // Evita el envío del formulario
+        const searchText = document.getElementById('searchText').value;
+        if (searchText.trim() !== '') {
+        window.location.href = `/browse?search=${encodeURIComponent(searchText)}`;
+        }
+      }
+    }
   </script>
-
-
   </body>
 
 </html>
