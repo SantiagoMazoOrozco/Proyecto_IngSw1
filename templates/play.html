@@ -1,8 +1,31 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>Chrono Trigger (SNES)</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="{% static 'assets/images/favicon.ico' %}">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo-cyborg-gaming.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <!-- TemplateMo 579 Cyborg Gaming -->
+    <!-- https://templatemo.com/tm-579-cyborg-gaming -->
 <head>
-  <title>Jugar Chrono Trigger (SNES)</title>
   <style>
     #emulator-frame {
       width: 1200px;
@@ -16,15 +39,459 @@
     }
     body { background: #181a1b; color: #fff; font-family: 'Poppins', sans-serif; }
     .center { display: flex; flex-direction: column; align-items: center; margin-top: 40px; }
+
+    /* Asegurar que el ícono sea visible inicialmente */
+      .theme-switcher {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        backdrop-filter: blur(4px);
+        background-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 
+          0 1px 3px rgba(0, 0, 0, 0.12),
+          0 1px 2px rgba(0, 0, 0, 0.24);
+      }
+
+      /* Efecto hover sutil */
+      .theme-switcher:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 
+          0 3px 6px rgba(0, 0, 0, 0.16),
+          0 3px 6px rgba(0, 0, 0, 0.23);
+      }
+
+      /* Efecto al hacer clic */
+      .theme-switcher:active {
+        transform: translateY(-50%) scale(0.95);
+      }
+
+      /* Ícono */
+      #theme-icon {
+        font-size: 18px;
+        color: var(--icon-color, #ffffff);
+        transition: 
+          color 0.3s ease,
+          transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      }
+
+      /* Efecto hover para el ícono */
+      .theme-switcher:hover #theme-icon {
+        transform: rotate(15deg);
+      }
+
+      /* Estilos para modo oscuro */
+      [data-theme="light"] .theme-switcher {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      [data-theme="light"] #theme-icon {
+        color: var(--icon-color, #000000);
+      }
+
+      :root {
+        --static-text-color: #ec6090; /* Color que NO cambiará (para h6) */
+        --dynamic-text-color: #fff; /* Color que SÍ cambiará (para h4) */
+      }
+
+      [data-theme="light"] {
+        --dynamic-text-color: #333; /* Color para h4 en modo claro */
+      }
+
+      h6 {
+        color: var(--static-text-color) !important; /* Color fijo */
+        font-size: 30px;
+        margin-bottom: 15px;
+      }
+
+      h4 {
+        color: var(--dynamic-text-color); /* Color dinámico */
+      }
+
+      .menu-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      /* Estilos del botón del menú */
+      .menu-trigger {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .menu-trigger:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .menu-text {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 14px;
+      }
+
+      .menu-icon i {
+        font-size: 18px;
+        color: var(--text-primary);
+        transition: transform 0.3s ease;
+      }
+
+      .menu-trigger:hover .menu-icon i {
+        transform: rotate(90deg);
+      }
+
+      /* Estilos del menú de navegación */
+      .nav-menu {
+        display: flex;
+        transition: all 0.3s ease;
+      }
+
+      .nav-list {
+        display: flex;
+        gap: 15px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .nav-item {
+        position: relative;
+      }
+
+      .nav-link {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .nav-link:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--accent-color);
+      }
+
+      .nav-link.active {
+        color: var(--accent-color);
+        font-weight: 600;
+      }
+
+      /* Estilos específicos para el perfil */
+      .profile-item {
+        margin-left: 10px;
+      }
+
+      .profile-link {
+        gap: 10px;
+      }
+
+      .profile-image {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--accent-color);
+        transition: transform 0.3s ease;
+      }
+
+      .profile-link:hover .profile-image {
+        transform: scale(1.1);
+      }
+
+      /* Versión móvil (menú hamburguesa) */
+      @media (max-width: 992px) {
+        .menu-container {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        
+        .nav-menu {
+          width: 100%;
+          max-height: 0;
+          overflow: hidden;
+          flex-direction: column;
+        }
+        
+        .nav-menu.active {
+          max-height: 500px;
+          padding: 15px 0;
+        }
+        
+        .nav-list {
+          flex-direction: column;
+          gap: 5px;
+        }
+        
+        .nav-link {
+          padding: 12px 20px;
+        }
+        
+        .profile-item {
+          margin-left: 0;
+          margin-top: 10px;
+          border-top: 1px solid var(--border-color);
+          padding-top: 10px;
+        }
+      }
   </style>
 </head>
 <body>
-  <div class="center">
-    <h2>Jugando: Chrono Trigger (Super Nintendo)</h2>
-    <div id="emulator-container"></div>
-    <p>Controles: Usa tu teclado como mando SNES.</p>
+  <!-- ***** Preloader Start ***** -->
+  <!-- <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div> -->
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="{% url 'home' %}" class="logo d-flex align-items-end justify-content-center"
+                      style="gap: 8px; transform: scale(0.95); transform-origin: right; margin-top: -23px; border: none; box-shadow: none; outline: none;">
+                      <img src="{% static 'assets/images/Logo_Symbol.png' %}" alt="RetroHub Logo"
+                          style="height: 90px; width: auto; border-radius: 8px; border: none;">
+                      <img src="{% static 'assets/images/Logo_Text.png' %}" alt="RetroHub Logo Text"
+                          style="height: 90px; width: auto; border-radius: 8px; border: none;">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                     <div class="theme-switcher-container" style="display: flex; align-items: left; justify-content: center;">
+                      <button id="theme-toggle" class="theme-switcher" aria-label="Cambiar tema">
+                        <i id="theme-icon" class="fas"></i>
+                      </button>
+                     </div>
+                    <!-- ***** Search End ***** -->
+                    <div class="search-input">
+                      <form id="search" action="#">
+                        <input type="text" placeholder="Busca tu proximo videojuego" id='searchText' name="searchKeyword" onkeypress="handle" />
+                        <i class="fa fa-search"></i>
+                      </form>
+                    </div>
+                    <!-- ***** Search End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <div class="menu-container">
+                      <nav class="nav-menu">
+                        <ul class="nav-list">
+                          <li class="nav-item"><a href="{% url 'home' %}" class="nav-link active">Hogar</a></li>
+                          <li class="nav-item"><a href="{% url 'browse' %}" class="nav-link">Buscar</a></li>
+                          <li class="nav-item"><a href="{% url 'details' %}" class="nav-link">Detalles</a></li>
+                          <li class="nav-item"><a href="{% url 'streams' %}" class="nav-link">Transmisiones</a></li>
+                          <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">Sobre Nosotros</a></li>
+                          <li class="nav-item profile-item">
+                            <a href="{% url 'login' %}" class="nav-link profile-link">
+                              Perfil
+                              <img src="{% static 'assets/images/profile-header.jpg' %}" alt="Foto de perfil" class="profile-image">
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-content">
+
+          <!-- ***** Banner Chrono Trigger Style ***** -->
+          <div class="main-banner" style="
+              background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)),
+              url('{% static 'assets/images/Chrono_Banner.jpg' %}');
+              background-size: cover;
+              background-position: center;
+              min-height: 550px;
+              display: flex;
+              align-items: center;
+              font-family: 'Press Start 2P', cursive;
+          ">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-7">
+                  <div class="header-text text-white" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.8);">
+                    <h2 class="mb-4" style="font-size: 2rem; font-weight: bold; color: #ffdd57;">
+                      <em style="color: #ec6090; font-style: normal;">SNES:</em> Chrono Trigger
+                    </h2>
+                    <p class="lead mb-4" style="font-size: 1rem; color: #ffffff;">
+                      Revive la aventura épica a través del tiempo con Crono y sus amigos.
+                    </p>
+                    <div class="main-button" style="display: flex; gap: 12px;">
+                      <a href="{% url 'browse' %}" class="btn btn-lg px-4 py-2" style="
+                        background-color: #6a5acd;
+                        border: none;
+                        border-radius: 12px;
+                        font-weight: bold;
+                        color: white;
+                        font-size: 0.9rem;
+                      ">
+                        Buscar Juegos
+                      </a>
+                      <a href="{% url 'play_chrono_trigger' %}" class="btn btn-lg px-4 py-2" style="
+                        background-color: #2ecc71;
+                        border: none;
+                        border-radius: 12px;
+                        font-weight: bold;
+                        color: white;
+                        font-size: 0.9rem;
+                      ">
+                        Jugar Chrono Trigger
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ***** Banner Chrono Trigger End ***** -->
+
+
+          <!-- ***** Most Popular Start ***** -->
+          <div class="most-popular">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="center">
+                  <h2>Jugando en estos momentos:<em> Chrono Trigger (Super Nintendo) </em>
+                  </h2>
+                  <div id="emulator-container"></div>
+                  <p>Controles: Usa tu teclado como mando SNES.</p>
+                </div>
+                <!-- Botón bien posicionado FUERA del row de tarjetas -->
+                <div class="main-button text-center mb-4">
+                  <a href="{% url 'browse' %}">Descubre más juegos populares</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ***** Most Popular End ***** -->
+        </div>
+      </div>
+    </div>
   </div>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved. 
+          
+          <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+  <script src="{% static 'assets/js/isotope.min.js' %}"></script>
+  <script src="{% static 'assets/js/owl-carousel.js' %}"></script>
+  <script src="{% static 'assets/js/tabs.js' %}"></script>
+  <script src="{% static 'assets/js/popup.js' %}"></script>
+  <script src="{% static 'assets/js/custom.js' %}"></script>
   <script>
+
+    // Función para actualizar el ícono según el tema
+    function updateThemeIcon(theme) {
+      const themeIcon = document.getElementById('theme-icon');
+      themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+
+    // Función para cambiar el tema
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? null : 'light';
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    }
+
+    // Inicialización al cargar la página
+    function initializeTheme() {
+      // Cargar tema guardado o detectar preferencia del sistema
+      const savedTheme = localStorage.getItem('theme');
+      const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      
+      const initialTheme = savedTheme || (systemPrefersLight ? 'light' : '');
+      if (initialTheme) {
+        document.documentElement.setAttribute('data-theme', initialTheme);
+      }
+      
+      // Actualizar ícono inicial
+      updateThemeIcon(initialTheme || '');
+    }
+
+    // Eventos
+    document.addEventListener('DOMContentLoaded', initializeTheme);
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuTrigger = document.querySelector('.menu-trigger');
+      const navMenu = document.querySelector('.nav-menu');
+      
+      menuTrigger.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+        
+        // Animación del icono
+        const menuIcon = this.querySelector('.menu-icon i');
+        if (navMenu.classList.contains('active')) {
+          menuIcon.classList.replace('fa-bars', 'fa-times');
+        } else {
+          menuIcon.classList.replace('fa-times', 'fa-bars');
+        }
+      });
+    });
+
+    // Manejo del evento de búsqueda
+    function handle(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault(); // Evita el envío del formulario
+        const searchText = document.getElementById('searchText').value;
+        if (searchText.trim() !== '') {
+        window.location.href = `/browse?search=${encodeURIComponent(searchText)}`;
+        }
+      }
+    }
+
     // Usar iframe para cargar el emulador Webretro con la ROM correcta
     const container = document.getElementById('emulator-container');
     const iframe = document.createElement('iframe');
