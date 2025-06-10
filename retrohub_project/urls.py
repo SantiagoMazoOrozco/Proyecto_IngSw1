@@ -42,8 +42,13 @@ def login(request):
 
 def play_chrono_trigger(request):
     return render(request, 'play.html')
+#interfaz sencilla y accesible
+def interfaz(request):
+    return render(request, 'interfaz.html')
+
 
 urlpatterns = [
+    path('interfaz/',interfaz , name='interfaz'),
     path('admin/', admin.site.urls),
     path('', home, name='home'),  # Esta línea hace que se cargue en la raíz /
     path('browse/', browse, name='browse'),
