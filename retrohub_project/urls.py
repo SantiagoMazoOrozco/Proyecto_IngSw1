@@ -31,9 +31,6 @@ def details(request):
 def profile(request):
     return render(request, 'profile.html')
 
-def streams(request):
-    return render(request, 'streams.html')
-
 def about(request):
     return render(request, 'about.html')
 
@@ -54,7 +51,6 @@ urlpatterns = [
     path('browse/', browse, name='browse'),
     path('details/', details, name='details'),
     path('profile/', profile, name='profile'),
-    path('streams/', streams, name='streams'),
     path('about/', about, name='about'),
     path('login/', login, name='login'),
     path('play/chrono-trigger/', play_chrono_trigger, name='play_chrono_trigger'),

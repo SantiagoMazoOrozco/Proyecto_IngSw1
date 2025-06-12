@@ -32,14 +32,18 @@
       height: 900px;
       max-width: 98vw;
       max-height: 90vh;
-      border: 2px solid #ec6090;
+      border: 6px solid #ec6090;
+      border-radius: 18px;
       background: #000;
       display: block;
       margin: 0 auto;
     }
-    body { background: #181a1b; color: #fff; font-family: 'Poppins', sans-serif; }
-    .center { display: flex; flex-direction: column; align-items: center; margin-top: 40px; }
-
+    .center { 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      margin-top: 40px; 
+    }
     /* Asegurar que el ícono sea visible inicialmente */
       .theme-switcher {
         position: absolute;
@@ -117,6 +121,12 @@
 
       h4 {
         color: var(--dynamic-text-color); /* Color dinámico */
+      }
+
+      h2 {
+        color: var(--static-text-color);
+        font-size: 36px;
+        margin-bottom: 20px;
       }
 
       .menu-container {
@@ -257,11 +267,12 @@
           padding-top: 10px;
         }
       }
+      
   </style>
 </head>
 <body>
   <!-- ***** Preloader Start ***** -->
-  <!-- <div id="js-preloader" class="js-preloader">
+  <div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
       <span class="dot"></span>
       <div class="dots">
@@ -270,7 +281,7 @@
         <span></span>
       </div>
     </div>
-  </div> -->
+  </div>
   <!-- ***** Preloader End ***** -->
 
   <!-- ***** Header Area Start ***** -->
@@ -294,7 +305,7 @@
                       </button>
                      </div>
                     <!-- ***** Search End ***** -->
-                    <div class="search-input">
+                    <div class="search-input" style="margin: 10px;">
                       <form id="search" action="#">
                         <input type="text" placeholder="Busca tu proximo videojuego" id='searchText' name="searchKeyword" onkeypress="handle" />
                         <i class="fa fa-search"></i>
@@ -308,12 +319,11 @@
                           <li class="nav-item"><a href="{% url 'home' %}" class="nav-link active">Hogar</a></li>
                           <li class="nav-item"><a href="{% url 'browse' %}" class="nav-link">Buscar</a></li>
                           <li class="nav-item"><a href="{% url 'details' %}" class="nav-link">Detalles</a></li>
-                          <li class="nav-item"><a href="{% url 'streams' %}" class="nav-link">Transmisiones</a></li>
                           <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">Sobre Nosotros</a></li>
                           <li class="nav-item profile-item">
-                            <a href="{% url 'login' %}" class="nav-link profile-link">
+                            <a href="{% url 'login' %}" class="nav-link profile-link" style="display: flex; align-items: center; gap: 8px;">
                               Perfil
-                              <img src="{% static 'assets/images/profile-header.jpg' %}" alt="Foto de perfil" class="profile-image">
+                              <img src="{% static 'assets/images/profile-header.jpg' %}" alt="Foto de perfil" class="profile-image" style="width: 22px; height: 22px; border-radius: 50%;">
                             </a>
                           </li>
                         </ul>
@@ -334,7 +344,7 @@
           <!-- ***** Banner Chrono Trigger Style ***** -->
           <div class="main-banner" style="
               background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)),
-              url('{% static 'assets/images/Chrono_Banner.jpg' %}');
+              url('https://upload.wikimedia.org/wikipedia/en/a/a7/Chrono_Trigger.jpg') no-repeat center center;
               background-size: cover;
               background-position: center;
               min-height: 550px;
@@ -352,54 +362,81 @@
                     <p class="lead mb-4" style="font-size: 1rem; color: #ffffff;">
                       Revive la aventura épica a través del tiempo con Crono y sus amigos.
                     </p>
-                    <div class="main-button" style="display: flex; gap: 12px;">
-                      <a href="{% url 'browse' %}" class="btn btn-lg px-4 py-2" style="
-                        background-color: #6a5acd;
-                        border: none;
-                        border-radius: 12px;
-                        font-weight: bold;
-                        color: white;
-                        font-size: 0.9rem;
-                      ">
-                        Buscar Juegos
-                      </a>
-                      <a href="{% url 'play_chrono_trigger' %}" class="btn btn-lg px-4 py-2" style="
-                        background-color: #2ecc71;
-                        border: none;
-                        border-radius: 12px;
-                        font-weight: bold;
-                        color: white;
-                        font-size: 0.9rem;
-                      ">
-                        Jugar Chrono Trigger
-                      </a>
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <!-- ***** Banner Chrono Trigger End ***** -->
-
-
           <!-- ***** Most Popular Start ***** -->
-          <div class="most-popular">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="center">
-                  <h2>Jugando en estos momentos:<em> Chrono Trigger (Super Nintendo) </em>
-                  </h2>
-                  <div id="emulator-container"></div>
-                  <p>Controles: Usa tu teclado como mando SNES.</p>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="center">
+                <h2>Jugando en estos momentos:<em> Chrono Trigger (Super Nintendo) </em>
+                </h2>
+                <div id="emulator-container"></div>
+                <div style="display: flex; justify-content: center; align-items: center; height: 20px;">
+                  <p style="margin: 0;">Controles: Usa tu teclado como mando SNES.</p>
                 </div>
-                <!-- Botón bien posicionado FUERA del row de tarjetas -->
-                <div class="main-button text-center mb-4">
-                  <a href="{% url 'browse' %}">Descubre más juegos populares</a>
+                <div class="row">
+                  <div class="col-lg-10 offset-lg-1">
+                    <div class="center">
+                      <div style="font-family: 'Arial', sans-serif; width: 100%; margin: 0 auto; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); overflow: hidden; color: #fff; display: flex;">
+                        
+                        <!-- Imagen del juego -->
+                        <div style="flex: 1; padding: 20px; background: #EC6090; display: flex; align-items: center; justify-content: center;">
+                          <img 
+                            src="{% static 'assets/images/chrono-image.jpg' %}" 
+                            alt="Chrono Trigger Cover Art" 
+                            style="max-width: 100%; border-radius: 8px; border: 2px solid #4facfe; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);"
+                          >
+                        </div>
+                        
+                        <!-- Información del juego -->
+                        <div style="flex: 1.5; padding: 20px; background: #1F2122;">
+                          <h1 style="margin: 0; font-family: 'Press Start 2P', cursive; color: #00ffff; font-size: 22px; text-shadow: 2px 2px #ff00ff, -2px -2px #000;">CHRONO TRIGGER</h1>
+                          <p style="font-family: poppins; color: #fff;">
+                            Un épico RPG de viaje en el tiempo donde las decisiones del jugador afectan el pasado, presente y futuro. 
+                            Con una historia emocionante, personajes memorables y un sistema de combate innovador.
+                          </p>                          
+                          <div style="margin-top: 20px; background: rgba(0, 0, 0, 0.3); padding: 12px; border-radius: 6px;">
+                            <p style="margin: 5px 0; font-family: poppins; color: white;"><strong style="color: #00ffff; font-family: 'Press Start 2P', cursive; font-size: 12px;">Categoría:</strong> RPG / Aventura</p>
+                            <p style="margin: 5px 0; font-family: poppins; color: white;"><strong style="color: #00ffff; font-family: 'Press Start 2P', cursive; font-size: 12px;">Desarrollador:</strong> Square (ahora Square Enix)</p>
+                            <p style="margin: 5px 0; font-family: poppins; color: white;"><strong style="color: #00ffff; font-family: 'Press Start 2P', cursive; font-size: 12px;">Director:</strong> Takashi Tokita, Yoshinori Kitase</p>
+                            <p style="margin: 5px 0; font-family: poppins; color: white;"><strong style="color: #00ffff; font-family: 'Press Start 2P', cursive; font-size: 12px;">Consolas:</strong> SNES, PlayStation, Nintendo DS, iOS, Android</p>
+                            <p style="margin: 5px 0; font-family: poppins; color: white;"><strong style="color: #00ffff; font-family: 'Press Start 2P', cursive; font-size: 12px;">Lanzamiento:</strong> 11 de marzo de 1995 (JP)</p>
+                          </div>
+                          
+                          <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+                            <span style="background: #ff00ff; color: #000; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; font-family: 'Press Start 2P', cursive;">Viaje en el tiempo</span>
+                            <span style="background: #ff00ff; color: #000; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; font-family: 'Press Start 2P', cursive;">Combate por turnos</span>
+                            <span style="background: #ff00ff; color: #000; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; font-family: 'Press Start 2P', cursive;">Múltiples finales</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="display: flex; justify-content: center; align-items: center; height: 50px;"></div>
+                  <h4> Quieres más diversión? explora nuestra biblioteca de videojuegos!</h4>
+                    <div class="main-button text-center mb-6">
+                      <a href="{% url 'browse' %}" class="btn btn-lg px-4 py-2" style="
+                        background-color: #EC6090;
+                        border: none;
+                        border-radius: 12px;
+                        font-weight: bold;
+                        color: white;
+                        font-size: 0.9rem;
+                        font-family: 'Press Start 2P', cursive;
+                        margin: 10px;
+                      ">
+                        Buscar Juegos
+                      </a>
+                    </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- ***** Most Popular End ***** -->
         </div>
       </div>
     </div>
