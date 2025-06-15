@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cambiar avatar</title>
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+</head>
+<body>
+<div class="container" style="max-width: 400px; margin-top: 60px;">
+    <h2 class="mb-4 text-center">Cambiar avatar</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary w-100">Guardar</button>
+    </form>
+    {% if user.perfil.avatar %}
+        <div class="text-center mt-4">
+            <img src="{{ user.perfil.avatar.url }}" alt="Avatar actual" class="rounded-circle" width="120" height="120">
+        </div>
+    {% endif %}
+    <div class="mt-3 text-center">
+        <a href="{% url 'profile' %}">Volver a mi perfil</a>
+    </div>
+</div>
+</body>
+</html>

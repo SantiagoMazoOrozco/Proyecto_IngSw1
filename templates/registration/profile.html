@@ -305,11 +305,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                           <li class="nav-item profile-item">
                             <a href="{% url 'login' %}" class="nav-link profile-link" style="display: flex; align-items: center; gap: 8px;">
                               Perfil
-                              {% if perfil.avatar %}
-                                <img src="{{ perfil.avatar.url }}" alt="Avatar" class="profile-image" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid #ec6090;">
-                              {% else %}
-                                <img src="{% static 'assets/images/profile-header.jpg' %}" alt="Avatar" class="profile-image" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid #ec6090;">
-                              {% endif %}
+                              <img src="{% static 'assets/images/profile-header.jpg' %}" alt="Foto de perfil" class="profile-image" style="width: 22px; height: 22px; border-radius: 50%;">
                             </a>
                           </li>
                         </ul>
@@ -334,7 +330,12 @@ https://templatemo.com/tm-579-cyborg-gaming
               <div class="main-profile ">
                 <div class="row">
                   <div class="col-lg-4">
-                    <img src="{% static 'assets/images/profile.jpg' %}" alt="" style="border-radius: 23px;">
+                    {% if user.is_authenticated and user.perfil.avatar %}
+                      <!-- La imagen se obtiene de MEDIA_URL automáticamente con .url -->
+                      <img src="{{ user.perfil.avatar.url }}" alt="Avatar" style="border-radius: 23px; width: 150px; height: 150px; object-fit: cover;">
+                    {% else %}
+                      <img src="{% static 'assets/images/profile-header.jpg' %}" alt="Avatar" style="border-radius: 23px; width: 150px; height: 150px; object-fit: cover;">
+                    {% endif %}
                   </div>
                   <div class="col-lg-4 align-self-center">
                     <div class="main-info header-text">
@@ -560,32 +561,4 @@ https://templatemo.com/tm-579-cyborg-gaming
 
   </body>
 
-</html>
-
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Perfil</title>
-    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
-</head>
-<body>
-<div class="container" style="max-width: 600px; margin-top: 60px;">
-    <h2 class="mb-4 text-center">Perfil</h2>
-    <div class="card p-4">
-        <div class="text-center mb-3">
-            {% if user.perfil.avatar %}
-                <img src="{{ user.perfil.avatar.url }}" alt="Avatar" class="rounded-circle" width="120" height="120">
-            {% else %}
-                <img src="{% static 'assets/images/profile-header.jpg' %}" alt="Avatar" class="rounded-circle" width="120" height="120">
-            {% endif %}
-        </div>
-        <h4 class="text-center">{{ user.username }}</h4>
-        <div class="text-center mt-4">
-            <a href="{% url 'cambiar_avatar' %}" class="btn btn-primary">Cambiar avatar</a>
-        </div>
-    </div>
-</div>
-</body>
 </html>

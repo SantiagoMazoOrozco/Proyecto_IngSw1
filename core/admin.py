@@ -1,5 +1,9 @@
 from django.contrib import admin
 
+from .models import AvatarElemento  # Asegúrate de que la ruta de importación sea correcta
+
+admin.site.register(AvatarElemento)
+
 # from .models import Ejemplo  # Elimina o comenta esta línea
 
 # Registra aquí tus modelos cuando los tengas definidos, por ejemplo:

@@ -1,4 +1,7 @@
 from django.db import models
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Usuario(models.Model):
     password = models.CharField(max_length=128)
@@ -33,12 +36,22 @@ class Game(models.Model):
     def __str__(self):
         return self.nombre
 
+class AvatarElemento(models.Model):
+    nombre = models.CharField(max_length=100)
+    tipo = models.CharField(max_length=50)  # Ej: 'sombrero', 'fondo', 'gafas', etc.
+    imagen = models.CharField(max_length=255)  # Usa ImageField si manejas imágenes
+
+    def __str__(self):
+        return f"{self.tipo}: {self.nombre}"
+
 class Perfil(models.Model):
-    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
-    avatar = models.CharField(max_length=255, blank=True, null=True)  # Usa ImageField si manejas imágenes
+    usuario = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)  # Usa ImageField si manejas imágenes
     juego_favorito = models.ForeignKey(Game, on_delete=models.SET_NULL, null=True, blank=True, related_name='perfiles_favoritos')
     fecha_creacion = models.DateField(auto_now_add=True)
     ultima_conexion = models.DateTimeField(auto_now=True)
+    # Relación muchos a muchos con los elementos visuales
+    avatar_elementos = models.ManyToManyField(AvatarElemento, blank=True, related_name='perfiles')
 
     def __str__(self):
         return f"Perfil de {self.usuario.nickname}"
@@ -63,3 +76,8 @@ class Estadisticas(models.Model):
 
     def __str__(self):
         return f"Estadísticas de {self.perfil.usuario.nickname}"
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Perfil.objects.create(usuario=instance)

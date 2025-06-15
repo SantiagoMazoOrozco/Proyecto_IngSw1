@@ -15,8 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.shortcuts import render
+from django.conf import settings
+from django.conf.urls.static import static
 
 # Vista directa usando render
 def home(request):
@@ -54,4 +56,11 @@ urlpatterns = [
     path('about/', about, name='about'),
     path('login/', login, name='login'),
     path('play/chrono-trigger/', play_chrono_trigger, name='play_chrono_trigger'),
+    path('accounts/login/', 
+         __import__('django.contrib.auth.views').contrib.auth.views.LoginView.as_view(), 
+         name='login'),
+    path('', include('core.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
