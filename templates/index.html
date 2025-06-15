@@ -298,6 +298,16 @@
                           <li class="nav-item"><a href="{% url 'browse' %}" class="nav-link">Buscar</a></li>
                           <li class="nav-item"><a href="{% url 'details' %}" class="nav-link">Detalles</a></li>
                           <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">Sobre Nosotros</a></li>
+                          <!-- Botón login y registrarse uno al lado del otro -->
+                          <li class="nav-item" style="display: flex; align-items: center; gap: 8px;">
+                            <a href="{% url 'login' %}" class="nav-link profile-link" style="display: flex; align-items: center; gap: 8px;">
+                              Iniciar sesión
+                            </a>
+                            <a href="/register/" class="nav-link" style="color: #ec6090; font-weight: 600;">
+                              Registrarse
+                            </a>
+                          </li>
+                          <!-- Botón de perfil con icono/avatar, lleva a configuración de perfil -->
                           <li class="nav-item">
                             {% if user.is_authenticated %}
                               <a href="{% url 'profile' %}" class="nav-link profile-link" style="display: flex; align-items: center; gap: 8px;">
@@ -307,25 +317,8 @@
                                   <img src="{% static 'assets/images/profile-header.jpg' %}" alt="Avatar" class="profile-image" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid #ec6090;">
                                 {% endif %}
                               </a>
-                            {% else %}
-                              <a href="{% url 'login' %}" class="nav-link profile-link" style="display: flex; align-items: center; gap: 8px;">
-                                Perfil
-                                <img src="{% static 'assets/images/profile-header.jpg' %}" alt="Foto de perfil" class="profile-image" style="width: 22px; height: 22px; border-radius: 50%;">
-                              </a>
                             {% endif %}
                           </li>
-                          <li class="nav-item">
-                            <a href="/register/" class="nav-link" style="color: #ec6090; font-weight: 600;">
-                              Registrarse
-                            </a>
-                          </li>
-                          {% if user.is_authenticated %}
-                          <li class="nav-item">
-                            <a href="{% url 'cambiar_avatar' %}" class="nav-link" style="color: #ec6090; font-weight: 600;">
-                              Cambiar avatar
-                            </a>
-                          </li>
-                          {% endif %}
                         </ul>
                       </nav>
                     </div>
